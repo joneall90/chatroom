@@ -24,18 +24,18 @@ public class WebSocketChatApplication {
      */
     @GetMapping("/")
     public ModelAndView login() {
-        return new ModelAndView("/login");
+        return new ModelAndView("login");
     }
 
     /**
      * Chatroom Page
      */
-    @GetMapping("/index")
+    @GetMapping("index")
     public ModelAndView index(String username, HttpServletRequest request) throws UnknownHostException {
             if (StringUtils.isEmpty(username)) {
                 username = "Default";
             }
-            ModelAndView modelAndView = new ModelAndView("/chat");
+            ModelAndView modelAndView = new ModelAndView("chat");
             modelAndView.addObject("username", username);
             modelAndView.addObject("webSocketUrl", "ws://"+ InetAddress.getLocalHost().getHostAddress()+":"+request.getServerPort()+request.getContextPath()+"/chat");
             return modelAndView;
