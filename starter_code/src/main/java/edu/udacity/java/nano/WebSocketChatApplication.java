@@ -5,10 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 @SpringBootApplication
@@ -24,20 +22,15 @@ public class WebSocketChatApplication {
      */
     @GetMapping("/")
     public ModelAndView login() {
-        return new ModelAndView("login");
+        return new ModelAndView("/login");
     }
 
     /**
      * Chatroom Page
      */
-    @GetMapping("index")
+    @GetMapping("/index")
     public ModelAndView index(String username, HttpServletRequest request) throws UnknownHostException {
-            if (StringUtils.isEmpty(username)) {
-                username = "Default";
-            }
-            ModelAndView modelAndView = new ModelAndView("chat");
-            modelAndView.addObject("username", username);
-            modelAndView.addObject("webSocketUrl", "ws://"+ InetAddress.getLocalHost().getHostAddress()+":"+request.getServerPort()+request.getContextPath()+"/chat");
-            return modelAndView;
+        //TODO: add code for login to chatroom.
+        return null;
     }
 }

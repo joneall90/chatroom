@@ -1,11 +1,9 @@
 package edu.udacity.java.nano.chat;
 
-import com.alibaba.fastjson.JSON;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,13 +24,7 @@ public class WebSocketChatServer {
     private static Map<String, Session> onlineSessions = new ConcurrentHashMap<>();
 
     private static void sendMessageToAll(String msg) {
-        onlineSessions.forEach((id, session) -> {
-            try {
-                session.getBasicRemote().sendText(msg);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        //TODO: add send message method.
     }
 
     /**
@@ -40,17 +32,15 @@ public class WebSocketChatServer {
      */
     @OnOpen
     public void onOpen(Session session) {
-        onlineSessions.put(session.getId(), session);
-        sendMessageToAll(Message.jsonString(Message.ENTER, "", "", onlineSessions.size()));
+        //TODO: add on open connection.
     }
 
     /**
      * Send message, 1) get username and session, 2) send message to all.
      */
     @OnMessage
-    public void onMessage(Session session, String jsonString) {
-        Message message = JSON.parseObject(jsonString, Message.class);
-        sendMessageToAll(Message.jsonString(Message.CHAT, message.getUsername(), message.getMsg(), onlineSessions.size()));
+    public void onMessage(Session session, String jsonStr) {
+        //TODO: add send message.
     }
 
     /**
@@ -58,8 +48,7 @@ public class WebSocketChatServer {
      */
     @OnClose
     public void onClose(Session session) {
-        onlineSessions.remove(session.getId());
-        sendMessageToAll(Message.jsonString(Message.LEAVE, "", "", onlineSessions.size()));
+        //TODO: add close connection.
     }
 
     /**
