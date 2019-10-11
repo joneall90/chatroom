@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -26,4 +27,23 @@ public class WebSocketChatApplicationTest {
             .andExpect(view().name("login"));
 
     }
+    @Test
+    public void userJoin() throws Exception{
+        this.mockMvc.perform(get("/index?username=john")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("john")));
+    }
+    @Test
+    public void chat()throws Exception{
+        this.mockMvc.perform(get("/index?username=john")).andDo(print()).andExpect(status().isOk())
+                .andExpect(view().name("chat"));
+    }
+    @Test
+    public void leave() throws Exception{
+        this.mockMvc.perform(get("/index?username=john")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("john")));
+        this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
+                .andExpect(view().name("login"));
+    }
+
+
 }
